@@ -108,7 +108,7 @@ public class Main {
             }
             case 2 -> {
                 System.out.println("Lägg till " + elementParam + ":");
-                arrayParam = addNew(arrayParam, elementParam);
+                arrayParam = addNew(scanner,arrayParam, elementParam);
             }
             case 3 -> {
                 System.out.println("Ändra en " + elementParam + ":");
@@ -201,8 +201,29 @@ public class Main {
 
 
 
-    public static void printSummary(int[] ownersArray, int[] employeesArray) {
-    }
+        public static void printSummary(int[] ownersArray, int[] employeesArray) {
+            int totalOwnership = 0;
+            int i = 0;
+
+            while (i < ownersArray.length) {
+                System.out.println("Ägare " + (i + 1) + ": " + ownersArray[i] + "%");
+                totalOwnership += ownersArray[i];
+                i++;
+            }
+            System.out.println("Total ägande: " + totalOwnership + "%");
+
+            int totalHoursSalaries = 0;
+            i = 0;
+            while (i < employeesArray.length) {
+                System.out.println("Anställd " + (i + 1) + ": " + employeesArray[i] + " kr/h");
+                totalHoursSalaries += employeesArray[i];
+                i++;
+
+            }
+            System.out.println("Total timkonstand anställda: " + totalHoursSalaries + " kr/h");
+
+        }
+
 
     public static int[] remove(int[] arrayParam, String elementParam) {
         return arrayParam;
@@ -222,17 +243,61 @@ public class Main {
                 System.out.println(elementParam + " " + i + ": " + arrayParam[i] + printPrefix);
             }
         } else {
-            System.out.println("Det finns inga" + elementParam + "inlagda...");
+            System.out.println("Det finns inga " + elementParam + " inlagda...");
+
         }
         return arrayParam;
 
     }
 
-    public static int[] addNew(int[] arrayParam, String elementParam) {
+    public static int[] addNew(Scanner scanner, int[] arrayParam, String elementParam) {
+        //TODO I´m getting owner 0 instead of owner 1 why is that?
+        if (elementParam.equals("anställd")) {
+            int salary;
+            do {
+                System.out.println("Ange den anställdes lön > ");
+                salary = scanner.nextInt();
+                scanner.nextLine();
+
+                if (salary <= 0) {
+                    System.out.println("Timlönen måste vara minst 0kr per timme...");
+                }
+            } while (salary <= 0);
+
+            if (arrayParam.length > 0) {
+                int[] newArray = new int[arrayParam.length + 1];
+                System.arraycopy(arrayParam, 0, newArray, 0, arrayParam.length);
+                newArray[newArray.length - 1] = salary;
+                arrayParam = newArray;
+            } else {
+                arrayParam = new int[]{salary};
+            }
+        } else {
+            int ownership;
+            do {
+                System.out.println("Ange ägarens ägarandel >");
+                ownership = scanner.nextInt();
+                if (ownership <= 0 || ownership >= 100) {
+                    System.out.println("Felaktig ägarandel. Det måste vara mer än 0 % och mindre än 100%");
+                }
+            } while (ownership <= 0 || ownership >= 100);
+            arrayParam = correctOwnership(scanner, arrayParam, ownership, false);
+            int[] newArray = new int[arrayParam.length + 1];
+
+            for (int i = 0; i < arrayParam.length; i++) {
+                newArray[i] = arrayParam[i];
+            }
+                newArray[newArray.length - 1] = ownership;
+            arrayParam = newArray;
 
 
+
+
+
+           }
         return arrayParam;
     }
+
 
     public static int[] correctOwnership(Scanner scanner, int[] arrayParam, int wantedOwnership, boolean giveAwayOwnership) {
         String giveOrTake = giveAwayOwnership ? "fördelas ut" : "tas fram";
@@ -248,7 +313,7 @@ public class Main {
             }
 
             for (int i = 0; i < arrayParam.length; i++) {
-                System.out.println("Ägare " + i + ": " + arrayParam[i] + "%");
+                System.out.println("Ägare " + (i + 1) + ": " + arrayParam[i] + "%");
             }
             int ownerIndex;
             do {
