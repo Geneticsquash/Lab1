@@ -143,13 +143,15 @@ public class Main {
         } while (inputNumber < 0 || inputNumber >= arrayParam.length);
 
         if (elementParam.equals("ägare")) {
-            int ownership = 0;
+            int ownership;
             do {
                 System.out.println("Ange ägarens nya ägarandel > ");
                 ownership = scanner.nextInt();
                 if (ownership <= 0 || ownership >= 100) {
                     System.out.println("Felaktig ägarandel. Det måste vara mer än 0% men mindre än 100%");
-                } while (ownership <= 0 || ownership >= 100);
+
+                }
+            } while (ownership <= 0 || ownership >= 100) ;
 
                 boolean giveaway;
                 if (ownership <= arrayParam[inputNumber]) {
@@ -161,38 +163,43 @@ public class Main {
                     arrayParam[inputNumber] += ownership;
                     giveaway = true;
                 }
-                int[] tempArray = new int[arrayParam.length - 1];
-                int i = 0, j = 0;
 
+                int[] tempArray = new int[arrayParam.length - 1];
+                int j = 0;
+                for (int i = 0; i < arrayParam.length; i++) {
+                    if (i != inputNumber) {
+                        tempArray[j] = arrayParam[i];
+                        j++;
+                    }
+                }
+
+                tempArray = correctOwnership(scanner, tempArray, ownership, giveaway);
+                j = 0;
+                for (int i = 0; i < arrayParam.length; i++) {
+                    if (i != inputNumber) {
+                        arrayParam[i] = tempArray[j];
+                        j++;
+                    }
+                }
+            } else {
+                int salary = 0;
+                do {
+                    System.out.println("Ange den anställdes nya timlön >");
+                    salary = scanner.nextInt();
+                    if (salary <= 0) {
+                        System.out.println("Felaktig timlön. Det måste vara mer än 0kr/h");
+                    }
+                } while (salary <= 0);
+                arrayParam[inputNumber] = salary;
 
 
             }
 
-
-
-            //TODO Fix this crap
-        } else {
-            int salary = 0;
-            do {
-                System.out.println("Ange den anställdes nya timlön >");
-                salary = scanner.nextInt();
-                if (salary <= 0) {
-                    System.out.println("felaktig timlön. Det måste vara mer än 0kr/h");
-                }
-            } while (salary <= 0);
-            arrayParam[inputNumber] = salary;
-
+            return arrayParam;
 
         }
 
-        return arrayParam;
 
-
-        //TODO Fix this complicated thing
-
-
-
-    }
 
     public static void printSummary(int[] ownersArray, int[] employeesArray) {
     }
