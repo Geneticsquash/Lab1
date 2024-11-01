@@ -226,7 +226,37 @@ public class Main {
 
 
     public static int[] remove(int[] arrayParam, String elementParam) {
-        return arrayParam;
+        Scanner scanner = new Scanner(System.in);
+
+        if (arrayParam.length <= 1 && elementParam.equals("ägare")) {
+            System.out.println("Du kan inte ta bort den sista ägaren i företaget...");
+            return arrayParam;
+        }
+
+        System.out.println("Vilken " + elementParam + " vill du ta bort?");
+        printAll(arrayParam, elementParam);
+        int inputNumber;
+
+        do {
+            System.out.print("Ange siffran på den " + elementParam + " du vill ta bort > ");
+            inputNumber = scanner.nextInt() - 1; // Adjust for 1-based index
+            if (inputNumber < 0 || inputNumber >= arrayParam.length) {
+                System.out.println("Ogiltigt val. Försök igen...");
+            }
+        } while (inputNumber < 0 || inputNumber >= arrayParam.length);
+
+        int[] newArray = new int[arrayParam.length - 1];
+        for (int i = 0, j = 0; i < arrayParam.length; i++) {
+            if (i != inputNumber) {
+                newArray[j++] = arrayParam[i];
+            }
+        }
+
+        if (elementParam.equals("ägare")) {
+            newArray = correctOwnership(scanner, newArray, arrayParam[inputNumber], true);
+        }
+
+        return newArray;
     }
 
     public static int[] printAll(int[] arrayParam, String elementParam) {
