@@ -99,6 +99,7 @@ public class Main {
         System.out.println("4. Ta bort en " + elementParam + ".");
         System.out.println("0. Gå tillbaka till huvudmenyn.");
 
+        System.out.println("Ange siffran för menyval > ");
         int menuSubChoice = scanner.nextInt();
 
         switch (menuSubChoice) {
@@ -116,7 +117,7 @@ public class Main {
             }
             case 4 -> {
                 System.out.println("Ta bort " + elementParam + ":");
-                arrayParam = remove(arrayParam, elementParam);
+                arrayParam = remove(scanner, arrayParam, elementParam);
             }
             case 0 -> {
                 System.out.println("Gå tillbaka till huvudmenyn.");
@@ -225,8 +226,9 @@ public class Main {
         }
 
 
-    public static int[] remove(int[] arrayParam, String elementParam) {
-        Scanner scanner = new Scanner(System.in);
+    public static int[] remove(Scanner scanner, int[] arrayParam, String elementParam) {
+
+        //TODO Update remove method like the flowchart
 
         if (arrayParam.length <= 1 && elementParam.equals("ägare")) {
             System.out.println("Du kan inte ta bort den sista ägaren i företaget...");
@@ -253,10 +255,9 @@ public class Main {
         }
 
         if (elementParam.equals("ägare")) {
-            newArray = correctOwnership(scanner, newArray, arrayParam[inputNumber], true);
+            correctOwnership(scanner, newArray, arrayParam[inputNumber], true);
         }
-
-        return newArray;
+return arrayParam;
     }
 
     public static int[] printAll(int[] arrayParam, String elementParam) {
@@ -270,7 +271,7 @@ public class Main {
                 printPrefix = "kr/h";
             }
             for (int i = 0; i < arrayParam.length; i++) {
-                System.out.println(elementParam + " " + i + ": " + arrayParam[i] + printPrefix);
+                System.out.println(elementParam + " " + (i + 1) + ": " + arrayParam[i] + printPrefix + ".");
             }
         } else {
             System.out.println("Det finns inga " + elementParam + " inlagda...");
@@ -281,7 +282,7 @@ public class Main {
     }
 
     public static int[] addNew(Scanner scanner, int[] arrayParam, String elementParam) {
-        //TODO I´m getting owner 0 instead of owner 1 why is that?
+        //TODO "addNew description to label the owners as 'Owner 1' and 'Owner 2,' although the algorithm internally recognizes them as 0 and 1,  The root of the problem is probably correctOwnership"
         if (elementParam.equals("anställd")) {
             int salary;
             do {
@@ -302,7 +303,11 @@ public class Main {
             } else {
                 arrayParam = new int[]{salary};
             }
+
+
         } else {
+
+
             int ownership;
             do {
                 System.out.println("Ange ägarens ägarandel >");
@@ -319,10 +324,6 @@ public class Main {
             }
                 newArray[newArray.length - 1] = ownership;
             arrayParam = newArray;
-
-
-
-
 
            }
         return arrayParam;
@@ -341,9 +342,8 @@ public class Main {
             } else {
                 System.out.println("Vilken ägare vill du ta ägarandelar av?");
             }
-
             for (int i = 0; i < arrayParam.length; i++) {
-                System.out.println("Ägare " + (i + 1) + ": " + arrayParam[i] + "%");
+                System.out.println("Ägare " + (i + 1) + ": " + arrayParam[i] + "%.");
             }
             int ownerIndex;
             do {
@@ -358,7 +358,6 @@ public class Main {
                     break;
                 }
             } while (true);
-
             int correctOwnership;
             do {
                 System.out.print("Hur många procentenheter vill du " + giveOrTake + " ägare " + ownerIndex + "? >");
