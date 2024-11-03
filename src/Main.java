@@ -82,7 +82,7 @@ public class Main {
                     printSummary(ownersArray, employeesArray);
                 }
                 case 0 -> {
-                    System.out.println("Programmet avslutas.");
+                    System.out.println("Programmet avslutas...");
                 }
                 default -> {
                     System.out.println("Ogiltigt val. försök igen...");
@@ -139,7 +139,7 @@ public class Main {
             System.out.print("Ange siffran på den du vill ändra på > ");
             inputNumber = scanner.nextInt();
             if (inputNumber < 0 || inputNumber >= arrayParam.length) {
-                System.out.println("Ogiltigt val. Försök igen...");
+                System.out.println("Ange en giltig sifra...");
             }
         } while (inputNumber < 0 || inputNumber >= arrayParam.length);
 
@@ -149,7 +149,7 @@ public class Main {
                 System.out.println("Ange ägarens nya ägarandel > ");
                 ownership = scanner.nextInt();
                 if (ownership <= 0 || ownership >= 100) {
-                    System.out.println("Felaktig ägarandel. Det måste vara mer än 0% men mindre än 100%");
+                    System.out.println("Felaktig ägarandel. Det måste vara mer än 0% men mindre än 100%...");
 
                 }
             } while (ownership <= 0 || ownership >= 100) ;
@@ -188,7 +188,7 @@ public class Main {
                     System.out.println("Ange den anställdes nya timlön >");
                     salary = scanner.nextInt();
                     if (salary <= 0) {
-                        System.out.println("Felaktig timlön. Det måste vara mer än 0kr/h");
+                        System.out.println("Felaktig timlön. Det måste vara mer än 0kr/h...");
                     }
                 } while (salary <= 0);
                 arrayParam[inputNumber] = salary;
@@ -241,9 +241,9 @@ public class Main {
 
         do {
             System.out.print("Ange siffran på den " + elementParam + " du vill ta bort > ");
-            inputNumber = scanner.nextInt() - 1; // Adjust for 1-based index
+            inputNumber = scanner.nextInt();
             if (inputNumber < 0 || inputNumber >= arrayParam.length) {
-                System.out.println("Ogiltigt val. Försök igen...");
+                System.out.println("Ange en giltig siffra...");
             }
         } while (inputNumber < 0 || inputNumber >= arrayParam.length);
 
@@ -255,9 +255,10 @@ public class Main {
         }
 
         if (elementParam.equals("ägare")) {
-            correctOwnership(scanner, newArray, arrayParam[inputNumber], true);
+           return correctOwnership(scanner, newArray, arrayParam[inputNumber], true);
         }
-return arrayParam;
+
+return newArray;
     }
 
     public static int[] printAll(int[] arrayParam, String elementParam) {
