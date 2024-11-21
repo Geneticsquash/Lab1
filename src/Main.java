@@ -283,7 +283,7 @@ public class Main {
     }
 
     public static int[] addNew(int[] arrayParam, String elementParam) {
-        //TODO "addNew description to label the owners as 'Owner 1' and 'Owner 2,' although the algorithm internally recognizes them as 0 and 1,  The root of the problem is probably correctOwnership"
+
         if (elementParam.equals("anställd")) {
             int salary;
             do {
@@ -341,7 +341,7 @@ public class Main {
             int ownerIndex;
             do {
                 System.out.print("Ange siffran för vilken ägare du vill " + infoGiveOrTake + " > ");
-                ownerIndex = scanner.nextInt() - 1; // Adjust for zero-indexing
+                ownerIndex = scanner.nextInt() - 1;
 
                 if (ownerIndex < 0 || ownerIndex >= arrayParam.length) {
                     System.out.println("Felaktigt val. Prova igen...");
